@@ -16,5 +16,6 @@ def create_profile(sender, instance, created, **kwarge):
     if created:
         user_profile = Profile(user=instance)
         user_profile.save()
+        user_profile.follows.set([instance.profile.id])
 
 post_save.connect(create_profile,sender=User)
