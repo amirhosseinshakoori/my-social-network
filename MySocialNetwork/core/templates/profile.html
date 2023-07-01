@@ -27,27 +27,27 @@
 			</div>
 
 			<div class="col-11">
-						  {{ meep.body }}<br/>
+						  {{ Tweet.body }}<br/>
 			  				<small class="text-muted">
-			  					({{ meep.created_at}}) By 
-			  					@{{ meep.user.username }}
-			  		- {{ meep.number_of_likes }} Likes -
+			  					({{ Tweet.created_at}}) By 
+			  					@{{ Tweet.user.username }}
+			  		- {{ Tweet.number_of_likes }} Likes -
 			  		
-			  		{% if user in meep.likes.all %}
-				  	  <a href="{% url 'meep_like' meep.id %}"><i class="fa-solid fa-heart" style='color:red'></i></a>
+			  		{% if user in Tweet.likes.all %}
+				  	  <a href="{% url 'Tweet_like' Tweet.id %}"><i class="fa-solid fa-heart" style='color:red'></i></a>
 				  	{% else %}
-				  		<a href="{% url 'meep_like' meep.id %}"><i class="fa fa-heart-o" style="color:red"></i></a>
+				  		<a href="{% url 'Tweet_like' Tweet.id %}"><i class="fa fa-heart-o" style="color:red"></i></a>
 				  	{% endif %}
 
 				  	&nbsp;&nbsp;
-<a href="{% url 'meep_show' meep.id %}"><i class="fa-solid fa-share" style="color:gray"></i></a>
+<a href="{% url 'Tweet_show' Tweet.id %}"><i class="fa-solid fa-share" style="color:gray"></i></a>
 		  	
 
 {% if request.user.username == profile.user.username %}
 		  	&nbsp;&nbsp;
-<a href="{% url 'delete_meep' meep.id %}"><i class="fa fa-trash" style="color:gray"></i></a>
+<a href="{% url 'delete_Tweet' Tweet.id %}"><i class="fa fa-trash" style="color:gray"></i></a>
 		&nbsp;&nbsp;
-<a href="{% url 'edit_meep' meep.id %}"><i class="fa fa-edit" style="color:gray"></i></a>
+<a href="{% url 'edit_Tweet' Tweet.id %}"><i class="fa fa-edit" style="color:gray"></i></a>
 {% endif %}
 				  	
 
