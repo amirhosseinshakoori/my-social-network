@@ -1,4 +1,4 @@
-from django.shortcuts import render ,redirect
+from django.shortcuts import render ,redirect ,get_object_or_404
 from django.contrib import messages
 from .models import Profile ,Tweet
 from .forms import TweetForm ,SignUpForm,ProfilePicForm
@@ -131,3 +131,12 @@ def tweet_like(request, pk):
 	else:
 		messages.success(request, ("You Must Be Logged In To View That Page..."))
 		return redirect('home')
+	
+
+def tweet_show(request, pk):
+	tweet = get_object_or_404(Tweet, id=pk)
+	if tweet:
+		return render(request, "show_tweet.html", {'tweet':tweet})
+	else:
+		messages.success(request, ("That tweet Does Not Exist..."))
+		return redirect('home')	
