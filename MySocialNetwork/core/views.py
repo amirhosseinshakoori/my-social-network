@@ -15,16 +15,16 @@ def home(request):
 		form = TweetForm(request.POST or None)
 		if request.method == "POST":
 			if form.is_valid():
-				Tweet = form.save(commit=False)
-				Tweet.user = request.user
-				Tweet.save()
+				tweet = form.save(commit=False)
+				tweet.user = request.user
+				tweet.save()
 				messages.success(request, ("Your Tweet Has Been Posted!"))
 				return redirect('home')
 		
-		Tweets = Tweet.objects.all().order_by("-created_at")
+		Tweets = tweet.objects.all().order_by("-created_at")
 		return render(request, 'home.html', {"Tweets":Tweets, "form":form})
 	else:
-		Tweets = Tweet.objects.all().order_by("-created_at")
+		Tweets = tweet.objects.all().order_by("-created_at")
 		return render(request, 'home.html', {"Tweets":Tweets})
 
 def profile_list(request):
@@ -111,6 +111,23 @@ def update_user(request):
 			return redirect('home')
 
 		return render(request, "update_user.html", {'user_form':user_form, 'profile_form':profile_form})
+	else:
+		messages.success(request, ("You Must Be Logged In To View That Page..."))
+		return redirect('home')
+	
+
+
+def tweet_like(request, pk):
+	if request.user.is_authenticated:
+		tweet = get_object_or_404(Tweet, id=pk)
+		if tweet.likes.filter(id=request.user.id):
+			tweet.likes.remove(request.user)
+		else:
+			tweet.likes.add(request.user)
+		
+		return redirect(request.META.get("HTTP_REFERER"))
+
+
 	else:
 		messages.success(request, ("You Must Be Logged In To View That Page..."))
 		return redirect('home')

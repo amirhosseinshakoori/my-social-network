@@ -10,13 +10,13 @@
 
 	<h1>Tweets!</h1>
 <br/>
-	{% for Tweet in Tweets %}
+	{% for tweet in tweets %}
 		<div class="alert alert-dark" role="alert">
 <div class="container">
 	<div class="row">
 		<div class="col-1">
-		  {% if Tweet.user.profile.profile_image %}
-				<img src="{{Tweet.user.profile.profile_image.url }}" width=50 height=50 class="rounded-circle" alt="{{ profile.user.username }}">
+		  {% if tweet.user.profile.profile_image %}
+				<img src="{{tweet.user.profile.profile_image.url }}" width=50 height=50 class="rounded-circle" alt="{{ profile.user.username }}">
 
 				{% else %}
 				<img src="{% static 'images/default_profile_pic.png' %}" width=50 height=50 class="rounded-circle" alt="{{ profile.user.username }}">	
@@ -24,22 +24,22 @@
 		</div>
 
 		<div class="col-11">
-		  {{ Tweet.body }}<br/>
+		  {{ tweet.body }}<br/>
 		  <small class="text-muted">
-		  	({{ Tweet.created_at}}) By 
-		  	@{{ Tweet.user.username }}
+		  	({{ tweet.created_at}}) By 
+		  	@{{ tweet.user.username }}
 		  	&nbsp;&nbsp;
-		  	{{ Tweet.number_of_likes }}  
+		  	{{ tweet.number_of_likes }}  
 
-		  	{% if user in Tweet.likes.all %}
-		  	  <a href="{% url 'Tweet_like' Tweet.id %}">
+		  	{% if user in tweet.likes.all %}
+		  	  <a href="{% url 'tweet_like' tweet.id %}">
 	<i class="fa-solid fa-heart" style="color:red"></i></a>
 		  	{% else %}
-		  		<a href="{% url 'Tweet_like' Tweet.id %}">
+		  		<a href="{% url 'tweet_like' Tweet.id %}">
 		  <i class="fa fa-heart-o" style="color:red"></i></a>
 		  	{% endif %}
 		  	&nbsp;&nbsp;
-		  	<a href="{% url 'Tweet_show' Tweet.id %}">
+		  	<a href="{% url 'tweet_show' tweet.id %}">
 	<i class="fa-solid fa-share" style="color:gray"></i>
 		  	</a>
 		  	
